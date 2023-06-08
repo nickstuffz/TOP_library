@@ -1,13 +1,13 @@
 let myLibrary = [];
 
-const newBook = document.getElementById("new-book");
+const books_grid = document.getElementById("books-grid");
+const new_book = document.getElementById("new-book-btn");
 const form_tile = document.getElementById("form-tile");
 const form = document.getElementById("form");
-const close = document.getElementById("close");
-const add = document.getElementById("add")
+const close = document.getElementById("close-btn");
 
 
-newBook.addEventListener('click', () => {
+new_book.addEventListener('click', () => {
     form_tile.style.display = "flex";
     return;
 });
@@ -20,15 +20,17 @@ close.addEventListener('click', (e) => {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    let title = document.getElementById("form-title");
-    let author = document.getElementById("form-author");
-    let pages = document.getElementById("form-pages");
+    let title = document.getElementById("title-form");
+    let author = document.getElementById("author-form");
+    let pages = document.getElementById("pages-form");
     let read = document.querySelector("input[name='read']:checked");
     
     const newBook = new Book(title.value, author.value,
         pages.value, read.value);
         
     addBookToLibrary(newBook);
+
+    displayBooks();
         
     form_tile.style.display = "none";
     form.reset();
@@ -47,4 +49,19 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(book) {
     myLibrary.push(book);
     return;
+}
+
+function displayBooks() {
+    let book_tiles = document.getElementsByClassName("book-tile");
+    while (book_tiles[0]) {
+        book_tiles[0].parentNode.removeChild(book_tiles[0]);
+    }
+    myLibrary.forEach((book) => {
+        const newTile = document.createElement("div");
+        newTile.setAttribute("class", "tile book-tile");
+        newTile.innerHTML = book.title;
+        books_grid.appendChild(newTile);
+
+    });
+
 }
