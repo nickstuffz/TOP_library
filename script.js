@@ -108,3 +108,7 @@ function displayBooks() {
     });
 
 }
+
+// setup form validation
+
+
